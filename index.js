@@ -1,52 +1,56 @@
-const http = require('http');
-const util = require('util');
+const express = require('express');
+const cors = require('cors');
 
 // https://github.com/node-formidable/node-formidable
-const Formidable = require('formidable');
+const Formidable = require('formidable'); 
+const util = require('util');
 
 //https://www.npmjs.com/package/dotenv
 const cloudinary = require("cloudinary");
 require('dotenv').config()
 
+const app = express();
+app.use(cors());
 
 cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
 });
-
-
-//Create a server
-http.createServer((req, res) => {
-    if (req.url === '/upload' && req.method.toLowerCase() === 'post') {
-
-        // parse a file upload
-        const form = new Formidable();
-
-        form.parse(req, (err, fields, files) => {
-
-            //https://cloudinary.com/documentation/upload_images
-            cloudinary.uploader.upload(files.upload.path, result => {
-
-                console.log(result)
-                if (result.public_id) {
-                    res.writeHead(200, { 'content-type': 'text/plain' });
-                    res.write('received upload:\n\n');
-                    res.end(util.inspect({ fields: fields, files: files }));
-                }
-            });
-        });
-        return;
-    }
-
-    // show a file upload form
-    res.writeHead(200, { 'content-type': 'text/html' });
-    res.end(`
-    <form action="/upload" enctype="multipart/form-data" method="post">
+ 
+app.get('/', (req, res) => {
+  res.send(`
+    <form action="/api/upload" enctype="multipart/form-data" method="post">
       <input type="text" name="title" /><br/>
-      <input type="file" name="upload" multiple="multiple" /><br/>
+      <input type="file" name="upload" /><br/>
       <input type="submit" value="Upload" />
     </form>
   `);
+});
+ 
+app.post('/api/upload', (req, res, next) => {
 
-}).listen(8080);
+  const form = new Formidable();
+
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    console.log('files: ', files)
+    //https://cloudinary.com/documentation/upload_images
+    cloudinary.uploader.upload(files.upload.path, result => {
+
+      console.log('result: ', result) // en el result está la url de la imagen 
+      if (result.public_id) {
+          res.writeHead(200, { 'content-type': 'text/plain' });
+          res.write('received upload:\n\n');
+          res.end(util.inspect({ fields: fields, files: files, root: result.secure_url }));
+      }
+    });
+  });
+});
+ 
+app.listen(3000, () => {
+  console.log('Server listening on http://localhost:3000 ...');
+});

@@ -1,0 +1,49 @@
+files:  {
+  upload: File {
+    _events: [Object: null prototype] {},
+    _eventsCount: 0,
+    _maxListeners: undefined,
+    size: 264912,
+    path: 'C:\\Users\\Usuario\\AppData\\Local\\Temp\\upload_1ae311f40c3f2414595b04379262720e',
+    name: 'Perfil-1.jpg',
+    type: 'image/jpeg',
+    hash: null,
+    lastModifiedDate: 2020-05-24T16:58:17.609Z,
+    _writeStream: WriteStream {
+      _writableState: [WritableState],
+      writable: false,
+      _events: [Object: null prototype] {},
+      _eventsCount: 0,
+      _maxListeners: undefined,
+      path: 'C:\\Users\\Usuario\\AppData\\Local\\Temp\\upload_1ae311f40c3f2414595b04379262720e',
+      fd: null,
+      flags: 'w',
+      mode: 438,
+      start: undefined,
+      autoClose: true,
+      pos: undefined,
+      bytesWritten: 264912,
+      closed: false
+    }
+  }
+}
+result:  {
+  asset_id: '6dde2a68e79f114e534e3424804a1e2b',
+  public_id: 'q98vlqegjayl1ijtkgcj',
+  version: 1590339499,
+  version_id: '1aa7b1147729fbc283adcf89024af487',
+  signature: 'f8a517a24116f527ba8117a93d90bd32806356fb',
+  width: 1297,
+  height: 1273,
+  format: 'jpg',
+  resource_type: 'image',
+  created_at: '2020-05-24T16:58:19Z',
+  tags: [],
+  bytes: 264912,
+  type: 'upload',
+  etag: 'ec28b96a0d681c917b7c07e1629a8e4a',
+  placeholder: false,
+  url: 'http://res.cloudinary.com/ducb387p8/image/upload/v1590339499/q98vlqegjayl1ijtkgcj.jpg',
+  secure_url: 'https://res.cloudinary.com/ducb387p8/image/upload/v1590339499/q98vlqegjayl1ijtkgcj.jpg',
+  original_filename: 'upload_1ae311f40c3f2414595b04379262720e'
+}
